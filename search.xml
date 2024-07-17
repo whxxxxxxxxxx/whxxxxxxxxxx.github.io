@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>useMemo</title>
+      <link href="/2024/07/17/useMemo/"/>
+      <url>/2024/07/17/useMemo/</url>
+      
+        <content type="html"><![CDATA[<h1 id="UseMemo"><a href="#UseMemo" class="headerlink" title="UseMemo"></a>UseMemo</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// useMemo</span><br><span class="line">// 缓存: 消耗非常大的计算</span><br><span class="line"></span><br><span class="line">import &#123; useMemo, useState &#125; from &quot;react&quot;</span><br><span class="line"></span><br><span class="line">// 计算斐波那契数列之和</span><br><span class="line">function fib (n) &#123;</span><br><span class="line">  console.log(&#x27;计算函数执行了&#x27;)</span><br><span class="line">  if (n &lt; 3)</span><br><span class="line">    return 1</span><br><span class="line">  return fib(n - 2) + fib(n - 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function App () &#123;</span><br><span class="line">  const [count1, setCount1] = useState(0)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  const result = useMemo(() =&gt; &#123;</span><br><span class="line">    // 返回计算得到的结果</span><br><span class="line">    return fib(count1)</span><br><span class="line">  &#125;, [count1])</span><br><span class="line"></span><br><span class="line">  // const result = fib(count1)</span><br><span class="line"></span><br><span class="line">  const [count2, setCount2] = useState(0)</span><br><span class="line">  console.log(&#x27;组件重新渲染了&#x27;)</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;App&quot;&gt;</span><br><span class="line">      this is app</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setCount1(count1 + 1)&#125;&gt;change count1: &#123;count1&#125;&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setCount2(count2 + 1)&#125;&gt;change count2: &#123;count2&#125;&lt;/button&gt;</span><br><span class="line">      &#123;result&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>使用UseMemo可以控制部分计算只在指定变量发生变化的时候进行，避免消耗较大的计算在每个变量发送变化的时候都伴随页面的重新渲染而重新计算，导致页面性能降低。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> React </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> useMemo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>useReducer</title>
+      <link href="/2024/07/12/useReducer/"/>
+      <url>/2024/07/12/useReducer/</url>
+      
+        <content type="html"><![CDATA[<h1 id="UseReducer"><a href="#UseReducer" class="headerlink" title="UseReducer"></a>UseReducer</h1><p>同样是控制组件渲染，示例代码如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// useReducer</span><br><span class="line"></span><br><span class="line">import &#123; useReducer &#125; from &quot;react&quot;</span><br><span class="line"></span><br><span class="line">// 1. 定义reducer函数 根据不同的action 返回不同的状态</span><br><span class="line"></span><br><span class="line">function reducer (state, action) &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#x27;INC&#x27;:</span><br><span class="line">      return state + 1</span><br><span class="line">    case &#x27;DEC&#x27;:</span><br><span class="line">      return state - 1</span><br><span class="line">    case &#x27;SET&#x27;:</span><br><span class="line">      return action.payload</span><br><span class="line">    default:</span><br><span class="line">      return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2. 组件中调用useReducer(reducer, 0) =&gt; [state, dispatch]</span><br><span class="line"></span><br><span class="line">// 3. 调用dispatch(&#123;type:&#x27;INC&#x27;&#125;) =&gt; 通知reducer产生一个新的状态 使用这个新状态更新UI</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function App () &#123;</span><br><span class="line">  const [state, dispatch] = useReducer(reducer, 0)</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;App&quot;&gt;</span><br><span class="line">      this is app</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;DEC&#x27; &#125;)&#125;&gt;-&lt;/button&gt;</span><br><span class="line">      &#123;state&#125;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;INC&#x27; &#125;)&#125;&gt;+&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;SET&#x27;, payload: 100 &#125;)&#125;&gt;update&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>通过dispatch，传递action中的状态变量，并在reducer中定义根据状态的组件渲染规则，并根据action动态调整state的值，以此实现动态渲染。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> React </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> UseReducer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mock</title>
       <link href="/2024/06/10/mock/"/>
       <url>/2024/06/10/mock/</url>
